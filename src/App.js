@@ -1,24 +1,31 @@
-import logo from './logo.svg';
-import './App.css';
+import React, {useState, useEffect} from 'react';
 
-function App() {
+const App = () => {
+  const [movies, setMovies] = useState([]);
+  const [term, setTerm] = useState('everything');
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchMovies = async () => {
+    try{
+      
+        const res = await fetch(`https://api.nytimes.com/svc/movies/v2/reviews/search.json?query=${term}&api-key=${process.env.REACT_APP_KEY}`);
+        const movies = await res.json();
+        console.log(movies.results);
+        setMovies(movies.results)
+      }
+    catch(error){
+      console.log(error);
+    }
+  }
+    fetchMovies();
+  }, []);
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <section>
+
+      </section>
+    </>
   );
 }
 
